@@ -1,4 +1,4 @@
-[简体中文](../doc/saladict_chs.md) | [English](../doc/saladict.md) | [pt-BR](../doc/saladict_pt-br.md) | [한국어](../doc/saladict_ko.md) | [Español](doc/saladict_es.md) | Français
+[简体中文](../doc/saladict_chs.md) | [English](../doc/saladict.md) | [pt-BR](../doc/saladict_pt-br.md) | [한국어](../doc/saladict_ko.md) | [Español](../doc/saladict_es.md) | Français
 
 Note : cela ne fonctionne qu’avec les navigateurs qui offrent des raccourcis globaux pour les extensions (actuellement seul Firefox ne prend pas en charge les raccourcis globaux).
 
