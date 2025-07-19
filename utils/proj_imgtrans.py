@@ -256,6 +256,11 @@ class ProjImgTrans:
             self.mask_array = None
             self.inpainted_array = None
 
+    def current_has_alpha(self):
+        if self.current_img is None:
+            return False
+        return len(self.img_array.shape) and self.img_array.shape[-1] == 4
+
     def set_current_img_byidx(self, idx: int):
         num_pages = self.num_pages
         if idx < 0:
