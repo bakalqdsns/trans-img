@@ -803,6 +803,7 @@ class DrawingPanel(Widget):
             balloon_areas = np.where(ballon_mask > 0)
             if len(img.shape) == 3 and img.shape[2] == 4:
                 avg_alpha = np.mean(img[balloon_areas][..., 3])
+                avg_alpha = 0 if avg_alpha < 127 else avg_alpha
                 bg_pixel_value.append(avg_alpha)
             bg_pixel_value = np.array(np.round(bg_pixel_value), dtype=np.uint8)
             img[balloon_areas] = bg_pixel_value

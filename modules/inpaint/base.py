@@ -22,20 +22,22 @@ def inpaint_handle_alpha_channel(original_alpha, mask):
     '''
 
     result_alpha = original_alpha.copy()
-    return result_alpha
-    
+
     # Analyze the alpha values around the original mask to determine appropriate transparency
-    mask_dilated = cv2.dilate((mask > 0).astype(np.uint8), np.ones((15, 15), np.uint8), iterations=1)
-    surrounding_mask = mask_dilated - (mask > 0).astype(np.uint8)
-    
+    mask_dilated = cv2.dilate((mask > 127).astype(np.uint8), np.ones((15, 15), np.uint8), iterations=1)
+    surrounding_mask = mask_dilated - (mask > 127).astype(np.uint8)
+
     if np.any(surrounding_mask > 0):
         surrounding_alpha = original_alpha[surrounding_mask > 0]
         if len(surrounding_alpha) > 0:
             median_surrounding_alpha = np.median(surrounding_alpha)
-            result_alpha[surrounding_mask] = median_surrounding_alpha
+            # If surrounding area is mostly transparent (median alpha < 128),
+            # make inpainted areas transparent too
+            if median_surrounding_alpha < 128:
+                inpainted_mask = (mask > 127)
+                result_alpha[inpainted_mask] = median_surrounding_alpha
 
     return result_alpha
-
 
 class InpainterBase(BaseModule):
 
@@ -152,7 +154,7 @@ class InpainterBase(BaseModule):
             
             # Recombine with alpha if original was RGBA
             if original_alpha is not None:
-                result_alpha = inpaint_handle_alpha_channel(original_alpha, mask)
+                result_alpha = inpaint_handle_alpha_channel(original_alpha, original_mask)
                 return np.concatenate([inpainted, result_alpha], axis=2)
             return inpainted
 
