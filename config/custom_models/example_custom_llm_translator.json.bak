@@ -1,0 +1,75 @@
+{
+  "key": "custom_llm_translator",
+  "name": "自定义LLM翻译器",
+  "model_type": "translator",
+  "provider": "api",
+  "description": "使用自定义LLM API进行翻译",
+  "parameters": [
+    {
+      "name": "api_url",
+      "display_name": "API地址",
+      "param_type": "line_editor",
+      "default_value": "https://api.openai.com/v1/chat/completions",
+      "editable": true,
+      "description": "LLM API的完整URL",
+      "data_type": "str"
+    },
+    {
+      "name": "api_key",
+      "display_name": "API密钥",
+      "param_type": "line_editor",
+      "default_value": "",
+      "editable": true,
+      "description": "API密钥",
+      "data_type": "str"
+    },
+    {
+      "name": "model",
+      "display_name": "模型名称",
+      "param_type": "selector",
+      "default_value": "gpt-3.5-turbo",
+      "options": ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo", "custom"],
+      "editable": true,
+      "description": "使用的模型名称",
+      "data_type": "str"
+    },
+    {
+      "name": "temperature",
+      "display_name": "Temperature",
+      "param_type": "line_editor",
+      "default_value": "0.7",
+      "editable": true,
+      "description": "生成文本的随机性（0-2）",
+      "data_type": "float"
+    },
+    {
+      "name": "max_tokens",
+      "display_name": "最大Token数",
+      "param_type": "line_editor",
+      "default_value": "2000",
+      "editable": true,
+      "description": "单次请求的最大token数",
+      "data_type": "int"
+    },
+    {
+      "name": "system_prompt",
+      "display_name": "系统提示词",
+      "param_type": "editor",
+      "default_value": "You are a professional translator. Translate the following text accurately.",
+      "editable": true,
+      "description": "系统提示词，指导模型如何翻译",
+      "data_type": "str"
+    },
+    {
+      "name": "use_context",
+      "display_name": "使用上下文",
+      "param_type": "checkbox",
+      "default_value": true,
+      "editable": false,
+      "description": "是否使用上下文信息进行翻译",
+      "data_type": "bool"
+    }
+  ],
+  "implementation_class": "",
+  "enabled": true
+}

@@ -1,0 +1,48 @@
+{
+  "key": "custom_api_ocr",
+  "name": "自定义API OCR",
+  "model_type": "ocr",
+  "provider": "api",
+  "description": "通过API调用的自定义OCR服务",
+  "parameters": [
+    {
+      "name": "api_url",
+      "display_name": "API地址",
+      "param_type": "line_editor",
+      "default_value": "https://api.example.com/ocr",
+      "editable": true,
+      "description": "OCR服务的API地址",
+      "data_type": "str"
+    },
+    {
+      "name": "api_key",
+      "display_name": "API密钥",
+      "param_type": "line_editor",
+      "default_value": "",
+      "editable": true,
+      "description": "API访问密钥",
+      "data_type": "str"
+    },
+    {
+      "name": "language",
+      "display_name": "识别语言",
+      "param_type": "selector",
+      "default_value": "auto",
+      "options": ["auto", "zh", "en", "ja", "ko"],
+      "editable": false,
+      "description": "识别的目标语言",
+      "data_type": "str"
+    },
+    {
+      "name": "timeout",
+      "display_name": "超时时间(秒)",
+      "param_type": "line_editor",
+      "default_value": "30",
+      "editable": true,
+      "description": "API请求超时时间",
+      "data_type": "int"
+    }
+  ],
+  "implementation_class": "",
+  "enabled": true
+}

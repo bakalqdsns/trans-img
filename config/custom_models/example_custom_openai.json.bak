@@ -1,0 +1,65 @@
+{
+  "key": "custom_openai_api",
+  "name": "自定义OpenAI API",
+  "model_type": "translator",
+  "provider": "custom",
+  "description": "用户自定义的OpenAI兼容API翻译服务",
+  "parameters": [
+    {
+      "name": "api_url",
+      "display_name": "API地址",
+      "param_type": "line_editor",
+      "default_value": "https://api.openai.com/v1/chat/completions",
+      "editable": true,
+      "description": "OpenAI API的完整URL",
+      "data_type": "str"
+    },
+    {
+      "name": "api_key",
+      "display_name": "API密钥",
+      "param_type": "line_editor",
+      "default_value": "",
+      "editable": true,
+      "description": "您的API密钥",
+      "data_type": "str"
+    },
+    {
+      "name": "model",
+      "display_name": "模型名称",
+      "param_type": "line_editor",
+      "default_value": "gpt-3.5-turbo",
+      "editable": true,
+      "description": "使用的模型名称",
+      "data_type": "str"
+    },
+    {
+      "name": "temperature",
+      "display_name": "Temperature",
+      "param_type": "line_editor",
+      "default_value": "0.7",
+      "editable": true,
+      "description": "生成文本的随机性 (0-2)",
+      "data_type": "float"
+    },
+    {
+      "name": "max_tokens",
+      "display_name": "最大Token数",
+      "param_type": "line_editor",
+      "default_value": "2000",
+      "editable": true,
+      "description": "每次请求的最大token数",
+      "data_type": "int"
+    },
+    {
+      "name": "timeout",
+      "display_name": "超时时间(秒)",
+      "param_type": "line_editor",
+      "default_value": "30",
+      "editable": true,
+      "description": "API请求超时时间",
+      "data_type": "int"
+    }
+  ],
+  "implementation_class": "",
+  "enabled": true
+}

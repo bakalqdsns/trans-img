@@ -1,0 +1,48 @@
+{
+  "key": "custom_ocr_api",
+  "name": "自定义OCR API",
+  "model_type": "ocr",
+  "provider": "custom",
+  "description": "用户自定义的OCR API服务",
+  "parameters": [
+    {
+      "name": "api_url",
+      "display_name": "API地址",
+      "param_type": "line_editor",
+      "default_value": "http://localhost:8080/ocr",
+      "editable": true,
+      "description": "OCR服务的API地址",
+      "data_type": "str"
+    },
+    {
+      "name": "api_key",
+      "display_name": "API密钥",
+      "param_type": "line_editor",
+      "default_value": "",
+      "editable": true,
+      "description": "API认证密钥（如果需要）",
+      "data_type": "str"
+    },
+    {
+      "name": "language",
+      "display_name": "识别语言",
+      "param_type": "selector",
+      "default_value": "auto",
+      "options": ["auto", "zh", "en", "ja", "ko"],
+      "editable": true,
+      "description": "OCR识别的目标语言",
+      "data_type": "str"
+    },
+    {
+      "name": "use_gpu",
+      "display_name": "使用GPU",
+      "param_type": "checkbox",
+      "default_value": false,
+      "editable": true,
+      "description": "是否使用GPU加速",
+      "data_type": "bool"
+    }
+  ],
+  "implementation_class": "",
+  "enabled": true
+}
