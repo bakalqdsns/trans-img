@@ -19,10 +19,10 @@ class RunStatus:
 
 @nested_dataclass
 class ModuleConfig(Config):
-    textdetector: str = 'ctd'
-    ocr: str = "mit48px"
+    textdetector: str = 'comictextdetector'
+    ocr: str = "mit48pxctc"
     inpainter: str = 'lama_large_512px'
-    translator: str = "google"
+    translator: str = "Copy Source"
     enable_detect: bool = True
     keep_exist_textlines: bool = False
     enable_ocr: bool = True

@@ -5,11 +5,18 @@ import requests
 import base64
 from typing import List
 
-from .base import register_OCR, OCRBase, TextBlock
+from .base import register_OCR, OCRBase, TextBlock, register_model_definition, ModelType, ModelProvider
 from utils.message import create_error_dialog, create_info_dialog
 
 
-@register_OCR('stariver_ocr')
+@register_model_definition(
+    key="stariver_ocr",
+    name="Stariver Ocr",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
 class OCRStariver(OCRBase):
     params = {
         'User': "填入你的用户名",

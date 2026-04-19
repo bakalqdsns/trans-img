@@ -1,6 +1,13 @@
 from .base import *
 
-@register_translator('Caiyun')
+@register_model_definition(
+    key="Caiyun",
+    name="Caiyun Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class CaiyunTranslator(BaseTranslator):
 
     concate_text = False

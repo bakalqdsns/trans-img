@@ -4,7 +4,14 @@ import transformers
 
 CT_MODEL_PATH = 'data/models/m2m100-1.2B-ctranslate2'
 
-@register_translator('m2m100')
+@register_model_definition(
+    key="m2m100",
+    name="M2M100 Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class M2M100Translator(BaseTranslator):
 
     concate_text = False

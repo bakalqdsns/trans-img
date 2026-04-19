@@ -3,7 +3,14 @@ import ctranslate2, sentencepiece as spm
 
 SUGOIMODEL_TRANSLATOR_DIRPATH = 'data/models/sugoi_translator/'
 SUGOIMODEL_TOKENIZATOR_PATH = SUGOIMODEL_TRANSLATOR_DIRPATH + "spm.ja.nopretok.model"
-@register_translator('Sugoi')
+@register_model_definition(
+    key="Sugoi",
+    name="Sugoi Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class SugoiTranslator(BaseTranslator):
 
     concate_text = False

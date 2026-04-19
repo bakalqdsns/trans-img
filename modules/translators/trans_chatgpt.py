@@ -9,7 +9,7 @@ import inspect
 
 import openai
 
-from .base import BaseTranslator, register_translator
+from .base import BaseTranslator, register_translator, register_model_definition, ModelType, ModelProvider
 
 
 OPENAPI_V1_API = int(openai.__version__.split('.')[0]) >= 1
@@ -18,7 +18,14 @@ OPENAPI_V1_API = int(openai.__version__.split('.')[0]) >= 1
 class InvalidNumTranslations(Exception):
     pass
 
-@register_translator('ChatGPT')
+@register_model_definition(
+    key="ChatGPT",
+    name="Chatgpt Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class GPTTranslator(BaseTranslator):
     concate_text = False
     cht_require_convert = True

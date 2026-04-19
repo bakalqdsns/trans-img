@@ -3,7 +3,14 @@ from .base import *
 import random
 import hashlib
 
-@register_translator('text-generation-webui')
+@register_model_definition(
+    key="text-generation-webui",
+    name="Text-Generation-Webui Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class TGWTranslator(BaseTranslator):
     concate_text = False
     cht_require_convert = True

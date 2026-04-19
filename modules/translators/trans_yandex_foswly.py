@@ -7,7 +7,7 @@ import requests
 import re
 from typing import Dict, List, Optional
 
-from .base import BaseTranslator, register_translator
+from .base import BaseTranslator, register_translator, register_model_definition, ModelType, ModelProvider
 from utils.logger import logger as LOGGER
 
 
@@ -165,7 +165,14 @@ class MSEdgeTranslateProvider(FOSWLYProviderBase):
 # === Main Translator Class for Ballon Translator ===
 
 
-@register_translator("Yandex-FOSWLY")
+@register_model_definition(
+    key="Yandex-FOSWLY",
+    name="Yandex-Foswly Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class YandexFOSWLYTranslator(BaseTranslator):
     """
     Integrates multiple translation services from the FOSWLY/translate library.

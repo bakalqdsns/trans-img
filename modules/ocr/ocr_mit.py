@@ -2,7 +2,7 @@ from typing import List
 import numpy as np
 from copy import deepcopy
 
-from .base import DEVICE_SELECTOR, OCRBase, register_OCR, TextBlock
+from .base import DEVICE_SELECTOR, OCRBase, DEFAULT_DEVICE, register_OCR, TextBlock, register_model_definition, ModelType, ModelProvider
 from utils.textblock import collect_textblock_regions
 
 mit_params = {
@@ -26,13 +26,21 @@ class MITModels(OCRBase):
 
     @property
     def chunk_size(self) -> int:
-        return self.params['chunk_size']['value']
+        chunk = self.params.get('chunk_size', {})
+        if isinstance(chunk, dict):
+            return int(chunk.get('value', 16))
+        return int(chunk)
 
     @property
     def device(self) -> str:
-        return self.params['device']['value']
+        device = self.params.get('device', DEFAULT_DEVICE)
+        if isinstance(device, dict):
+            return device.get('value', DEFAULT_DEVICE)
+        return device
 
     def _ocr_blk_list(self, img: np.ndarray, blk_list: List[TextBlock], split_textblk=False, seg_func=None, *args, **kwargs):
+        if self.model is None:
+            raise RuntimeError("OCR model failed to load. Check console for error details.")
         regions, textblk_lst_indices = collect_textblock_regions(img, blk_list, self.model.text_height, self.model.maxwidth, split_textblk, seg_func)
         return self.model(blk_list, regions, textblk_lst_indices, chunk_size=self.chunk_size)
 
@@ -43,8 +51,15 @@ class MITModels(OCRBase):
 
 
 from .mit32px import OCR32pxModel
-@register_OCR('mit32px')
-class OCRMIT32px(MITModels):
+@register_model_definition(
+    key="mit32pxctc_ocr",
+    name="Mit32Pxctc Ocr",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
+class mit32pxCTC(MITModels):
 
     params = deepcopy(mit_params)
     download_file_list = [{
@@ -57,11 +72,17 @@ class OCRMIT32px(MITModels):
     }]
 
     def _load_model(self):
-        self.model = OCR32pxModel(r'data/models/mit32px_ocr.ckpt', self.device)
+        try:
+            self.model = OCR32pxModel(r'data/models/mit32px_ocr.ckpt', self.device)
+        except Exception as e:
+            print(f"Failed to load OCR32pxModel: {e}")
+            import traceback
+            traceback.print_exc()
+            self.model = None
 
 
 from .mit48px_ctc import OCR48pxCTC
-@register_OCR('mit48px_ctc')
+@register_OCR('mit48pxctc')
 class OCRMIT48pxCTC(MITModels):
 
     params = deepcopy(mit_params)
@@ -75,7 +96,13 @@ class OCRMIT48pxCTC(MITModels):
     }]
 
     def _load_model(self):
-        self.model = OCR48pxCTC(r'data/models/mit48pxctc_ocr.ckpt', self.device)
+        try:
+            self.model = OCR48pxCTC(r'data/models/mit48pxctc_ocr.ckpt', self.device)
+        except Exception as e:
+            print(f"Failed to load OCR48pxCTC: {e}")
+            import traceback
+            traceback.print_exc()
+            self.model = None
 
 
 from .mit48px import Model48pxOCR
@@ -92,4 +119,10 @@ class OCRMIT48px(MITModels):
     }]
 
     def _load_model(self):
-        self.model = Model48pxOCR(OCR48PXMODEL_PATH, self.device)
+        try:
+            self.model = Model48pxOCR(OCR48PXMODEL_PATH, self.device)
+        except Exception as e:
+            print(f"Failed to load Model48pxOCR: {e}")
+            import traceback
+            traceback.print_exc()
+            self.model = None

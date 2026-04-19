@@ -124,7 +124,16 @@ class GoogleTranslateProviderPython:
         return {"lang": target_language, "translations": translations_result}
 
 
-@register_translator("google")
+@register_model_definition(
+    key="google",
+    name="Google Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="Google Translate API - supports multiple languages",
+    parameters=[
+        ModelParameter(name="delay", display_name="Delay", param_type="line_editor", default_value=0.0, description="Delay in seconds")
+    ]
+)
 class TransGoogle(BaseTranslator):
 
     concate_text = False

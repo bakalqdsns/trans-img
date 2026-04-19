@@ -13,6 +13,7 @@ TEXTDETECTORS = Registry('textdetectors')
 register_textdetectors = TEXTDETECTORS.register_module
 
 from ..base import BaseModule, DEFAULT_DEVICE, DEVICE_SELECTOR
+from ..model_registry import module_register
 
 class TextDetectorBase(BaseModule):
 
@@ -22,8 +23,8 @@ class TextDetectorBase(BaseModule):
     def __init__(self, **params) -> None:
         super().__init__(**params)
         self.name = ''
-        for key in TEXTDETECTORS.module_dict:
-            if TEXTDETECTORS.module_dict[key] == self.__class__:
+        for key in module_register.module_dict:
+            if module_register.module_dict[key] == self.__class__:
                 self.name = key
                 break
 

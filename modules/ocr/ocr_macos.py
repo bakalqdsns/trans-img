@@ -10,7 +10,7 @@ if platform.system() == 'Darwin' and platform.mac_ver()[0] >= '10.15':
     import Vision
     import objc
 
-    from .base import register_OCR, OCRBase, TextBlock, LOGGER
+    from .base import register_OCR, OCRBase, TextBlock, LOGGER, register_model_definition, ModelType, ModelProvider
 
     def get_revision_level():
         with objc.autorelease_pool():
@@ -93,7 +93,14 @@ if platform.system() == 'Darwin' and platform.mac_ver()[0] >= '10.15':
     macos_ocr_supported_languages = get_supported_languages()
 
     if len(macos_ocr_supported_languages) > 0:
-        @register_OCR('macos_ocr')
+        @register_model_definition(
+    key="macos_ocr",
+    name="Macos Ocr",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
         class OCRApple(OCRBase):
             params = {
                 'language': {

@@ -5,7 +5,14 @@ os.environ['translators_default_region'] = os.environ.get('translators_default_r
 
 import translators as ts
 
-@register_translator('TranslatorsPack')
+@register_model_definition(
+    key="TranslatorsPack",
+    name="Translatorspack Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class GeneralTranslator(BaseTranslator):
     def __init__(self, lang_source, lang_target, *args, **kwargs):
         self.lang_source = lang_source

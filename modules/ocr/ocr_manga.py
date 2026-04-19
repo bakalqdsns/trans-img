@@ -6,7 +6,7 @@ import numpy as np
 import torch
 from typing import List
 
-from .base import OCRBase, register_OCR, DEFAULT_DEVICE, DEVICE_SELECTOR, TextBlock
+from .base import OCRBase, register_OCR, DEFAULT_DEVICE, DEVICE_SELECTOR, TextBlock, register_model_definition, ModelType, ModelProvider
 
 MANGA_OCR_PATH = r'data/models/manga-ocr-base'
 class MangaOcr:
@@ -41,7 +41,14 @@ def post_process(text):
     return text
 
 
-@register_OCR('manga_ocr')
+@register_model_definition(
+    key="manga_ocr",
+    name="Manga Ocr",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
 class MangaOCR(OCRBase):
     params = {
         'device': DEVICE_SELECTOR()
@@ -49,7 +56,7 @@ class MangaOCR(OCRBase):
     device = DEFAULT_DEVICE
 
     download_file_list = [{
-        'url': 'https://huggingface.co/kha-white/manga-ocr-base/resolve/main/',
+        'url': 'https://hf-mirror.com/kha-white/manga-ocr-base/resolve/main/',
         'files': ['pytorch_model.bin', 'config.json', 'preprocessor_config.json', 'README.md', 'special_tokens_map.json', 'tokenizer_config.json', 'vocab.txt'],
         'sha256_pre_calculated': ['c63e0bb5b3ff798c5991de18a8e0956c7ee6d1563aca6729029815eda6f5c2eb', None, None, None, None, None, None],
         'save_dir': 'data/models/manga-ocr-base',

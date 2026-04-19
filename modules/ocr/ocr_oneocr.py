@@ -12,7 +12,7 @@ from PIL import Image as PilImage
 from contextlib import contextmanager
 import logging
 
-from .base import register_OCR, OCRBase, TextBlock
+from .base import register_OCR, OCRBase, TextBlock, register_model_definition, ModelType, ModelProvider
 
 
 ONE_OCR_PATH = os.path.join("data", "models", "one-ocr")
@@ -240,7 +240,14 @@ class OcrEngine:
         return None
 
 
-@register_OCR("one_ocr")
+@register_model_definition(
+    key="one_ocr",
+    name="One Ocr",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
 class OCROneAPI(OCRBase):
     params = {
         "expand_small_blocks": {"type": "checkbox", "value": True, "description": f"Expand image width/height if < {MIN_DIM_SIZE}px before recognition by padding (helps with small images)"},

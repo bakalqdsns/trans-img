@@ -7,14 +7,21 @@ import numpy as np
 from typing import List
 import httpx
 
-from .base import register_OCR, OCRBase, TextBlock
+from .base import register_OCR, OCRBase, TextBlock, register_model_definition, ModelType, ModelProvider
 
 import logging
 httpx_logger = logging.getLogger("httpx")
 httpx_logger.setLevel(logging.WARNING)
 
 
-@register_OCR('google_vision')
+@register_model_definition(
+    key="google_vision",
+    name="Google Vision OCR",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
 class OCRGoogleVisionAPI(OCRBase):
     params = {
         'api_key': '',

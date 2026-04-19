@@ -16,7 +16,7 @@ import gzip
 import re
 from typing import Dict, List, Optional
 
-from modules.translators.base import BaseTranslator, register_translator
+from modules.translators.base import BaseTranslator, register_translator, register_model_definition, ModelType, ModelProvider
 from utils.logger import logger as LOGGER
 
 
@@ -304,7 +304,14 @@ def translate(
         raise Exception(f"Translation failed: {error_message}")
 
 
-@register_translator("DeepL Free")
+@register_model_definition(
+    key="DeepL Free",
+    name="Deepl Free Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class DeepLX(BaseTranslator):
     cht_require_convert = True
     params: Dict = {

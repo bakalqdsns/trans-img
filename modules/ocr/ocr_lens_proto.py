@@ -27,7 +27,7 @@ except ImportError:
         ) from None
 
 try:
-    from .base import register_OCR, OCRBase, TextBlock
+    from .base import register_OCR, OCRBase, TextBlock, register_model_definition, ModelType, ModelProvider
 except ImportError:
 
     class OCRBase:
@@ -144,7 +144,14 @@ def _preprocess_image_for_lens(img: Image.Image) -> Tuple[Optional[bytes], int, 
         return (None, 0, 0)
 
 
-@register_OCR("google_lens_exp")
+@register_model_definition(
+    key="google_lens_exp",
+    name="Google Lens Exp OCR",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
 class OCRLensAPI_exp(OCRBase):
     """
     OCR using the experimental Google Lens Protobuf API (using requests).

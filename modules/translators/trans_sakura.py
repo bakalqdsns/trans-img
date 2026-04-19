@@ -10,7 +10,7 @@ import json
 
 import openai
 
-from .base import BaseTranslator, register_translator
+from .base import BaseTranslator, register_translator, register_model_definition, ModelType, ModelProvider
 
 OPENAPI_V1_API = int(openai.__version__.split('.')[0]) >= 1
 
@@ -366,7 +366,14 @@ class SakuraDict():
         else:
             self.logger.warning(f"未知的字典类型: {dict_type}")
 
-@register_translator('Sakura')
+@register_model_definition(
+    key="Sakura",
+    name="Sakura Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class SakuraTranslator(BaseTranslator):
     concate_text = False
     cht_require_convert = True

@@ -5,11 +5,18 @@ import requests
 import base64
 from typing import List, Any
 
-from .base import register_OCR, OCRBase, TextBlock
+from .base import register_OCR, OCRBase, TextBlock, register_model_definition, ModelType, ModelProvider
 from utils.message import create_error_dialog, create_info_dialog
 
 
-@register_OCR('paddle_vl')
+@register_model_definition(
+    key="paddle_vl",
+    name="Paddle Vl OCR",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
 class OCRPaddleVL(OCRBase):
     params = {
         'server_url': 'http://127.0.0.1:8080/layout-parsing',

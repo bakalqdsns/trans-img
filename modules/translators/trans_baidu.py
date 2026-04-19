@@ -3,7 +3,14 @@ from .base import *
 import random
 import hashlib
 
-@register_translator('Baidu')
+@register_model_definition(
+    key="Baidu",
+    name="Baidu Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class BaiduTranslator(BaseTranslator):
     concate_text = False
     cht_require_convert = True

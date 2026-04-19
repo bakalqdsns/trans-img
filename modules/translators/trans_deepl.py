@@ -2,7 +2,14 @@ from .base import *
 import deepl
 
 
-@register_translator('DeepL')
+@register_model_definition(
+    key="DeepL",
+    name="Deepl Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class DeeplTranslator(BaseTranslator):
 
     concate_text = False

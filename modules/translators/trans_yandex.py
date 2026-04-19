@@ -1,6 +1,13 @@
 from .base import *
 
-@register_translator('Yandex')
+@register_model_definition(
+    key="Yandex",
+    name="Yandex Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class YandexTranslator(BaseTranslator):
 
     concate_text = False

@@ -18,7 +18,7 @@ except ImportError:
 import cv2
 import re
 
-from .base import OCRBase, register_OCR, DEFAULT_DEVICE, DEVICE_SELECTOR, TextBlock
+from .base import OCRBase, register_OCR, DEFAULT_DEVICE, DEVICE_SELECTOR, TextBlock, register_model_definition, ModelType, ModelProvider
 
 # Specify the path for storing PaddleOCR models
 PADDLE_OCR_PATH = os.path.join("data", "models", "paddle-ocr")
@@ -28,7 +28,14 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 if PADDLE_OCR_AVAILABLE:
 
-    @register_OCR("paddle_ocr")
+    @register_model_definition(
+    key="paddle_ocr",
+    name="Paddle Ocr",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
     class PaddleOCRModule(OCRBase):
         # Mapping language names to PaddleOCR codes
         lang_map = {

@@ -110,11 +110,11 @@ class XPOS2D(nn.Module):
 class Model48pxOCR:
     _MODEL_MAPPING = {
         'model': {
-            'url': 'https://huggingface.co/zyddnys/manga-image-translator/resolve/main/ocr_ar_48px.ckpt',
+            'url': 'https://hf-mirror.com/zyddnys/manga-image-translator/resolve/main/ocr_ar_48px.ckpt',
             'hash': '29daa46d080818bb4ab239a518a88338cbccff8f901bef8c9db191a7cb97671d',
         },
         'dict': {
-            'url': 'https://huggingface.co/zyddnys/manga-image-translator/resolve/main/alphabet-all-v7.txt',
+            'url': 'https://hf-mirror.com/zyddnys/manga-image-translator/resolve/main/alphabet-all-v7.txt',
             'hash': 'f5722368146aa0fbcc9f4726866e4efc3203318ebb66c811d8cbbe915576538a',
         },
     }

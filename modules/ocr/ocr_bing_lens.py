@@ -16,7 +16,7 @@ import io
 import http.cookiejar as cookielib
 from urllib.parse import urlparse, parse_qs
 
-from .base import register_OCR, OCRBase, TextBlock
+from .base import register_OCR, OCRBase, TextBlock, register_model_definition, ModelType, ModelProvider
 
 class BingOCRCore:
     API_ENDPOINT = 'https://www.bing.com/images/api/custom/knowledge'
@@ -258,7 +258,14 @@ def format_bing_ocr_result(result):
         return f"OCR Text: '{full_text}'" 
 
 
-@register_OCR('bing_ocr')
+@register_model_definition(
+    key="bing_ocr",
+    name="Bing Ocr",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
 class OCRBingAPI(OCRBase):
     params = {
         "delay": 1.0,

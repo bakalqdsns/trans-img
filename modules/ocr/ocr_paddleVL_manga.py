@@ -3,12 +3,19 @@ import numpy as np
 import torch
 from typing import List
 
-from .base import OCRBase, register_OCR, DEFAULT_DEVICE, DEVICE_SELECTOR, TextBlock
+from .base import OCRBase, register_OCR, DEFAULT_DEVICE, DEVICE_SELECTOR, TextBlock, register_model_definition, ModelType, ModelProvider
 
 MODEL_PATH = 'data/models/PaddleOCR-VL-For-Manga'
 
 
-@register_OCR('PaddleOCRVLManga')
+@register_model_definition(
+    key="PaddleOCRVLManga",
+    name="Paddleocrvlmanga",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
 class PaddleOCRVLManga(OCRBase):
     params = {
         'device': DEVICE_SELECTOR(),
@@ -20,7 +27,7 @@ class PaddleOCRVLManga(OCRBase):
     device = DEFAULT_DEVICE
 
     download_file_list = [{
-        'url': 'https://huggingface.co/jzhang533/PaddleOCR-VL-For-Manga/resolve/main/',
+        'url': 'https://hf-mirror.com/jzhang533/PaddleOCR-VL-For-Manga/resolve/main/',
         'save_dir': 'data/models/PaddleOCR-VL-For-Manga',
         'files': [
             'generation_config.json',

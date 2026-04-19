@@ -5,7 +5,14 @@ import uuid
 from typing import List, Dict
 from .base import *
 
-@register_translator('Youdao')
+@register_model_definition(
+    key="Youdao",
+    name="Youdao Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class YoudaoTranslator(BaseTranslator):
     concate_text = False
     cht_require_convert = True

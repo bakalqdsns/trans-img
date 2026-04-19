@@ -23,7 +23,14 @@ if shared.ON_WINDOWS:
         mapping[0x3000] = 0x0020  # 전각 공백 → 반각 공백
         return text.translate(mapping)
 
-    @register_translator('ezTrans')
+    @register_model_definition(
+    key="ezTrans",
+    name="Eztrans Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
     class ezTransTranslator(BaseTranslator):
         concate_text = True
 

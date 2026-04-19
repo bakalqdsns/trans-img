@@ -118,6 +118,15 @@ def standardize_module_params(params):
         params[k] = v
 
 
+
+def soft_empty_cache(model) -> None:
+    """Release cached resources for a model (no-op for most models)."""
+    if model is not None and hasattr(model, 'empty_cache'):
+        try:
+            model.empty_cache()
+        except Exception:
+            pass
+
 class BaseModule:
 
     params: Dict = None

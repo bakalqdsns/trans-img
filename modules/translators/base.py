@@ -7,12 +7,11 @@ from collections import OrderedDict
 from .exceptions import InvalidSourceOrTargetLanguage, TranslatorSetupFailure, MissingTranslatorParams, TranslatorNotValid
 from utils.textblock import TextBlock
 from ..base import BaseModule, DEVICE_SELECTOR
-from utils.registry import Registry
+from ..model_registry import module_register, register_model_definition, ModelType, ModelProvider, ModelParameter
+
+register_translator = register_model_definition
 from utils.io_utils import text_is_empty
 from utils.logger import logger as LOGGER
-
-TRANSLATORS = Registry('translators')
-register_translator = TRANSLATORS.register_module
 
 PROXY = urllib.request.getproxies()
 
@@ -84,8 +83,8 @@ class BaseTranslator(BaseModule):
                  **params) -> None:
         super().__init__(**params)
         self.name = ''
-        for key in TRANSLATORS.module_dict:
-            if TRANSLATORS.module_dict[key] == self.__class__:
+        for key in module_register.module_dict:
+            if module_register.module_dict[key] == self.__class__:
                 self.name = key
                 break
         self.textblk_break = '\n##\n'
@@ -231,7 +230,14 @@ class BaseTranslator(BaseModule):
         return 0.
 
 
-@register_translator('None')
+@register_model_definition(
+    key="None",
+    name="None",
+    model_type=ModelType.TRANSLATOR,
+    provider=ModelProvider.LOCAL,
+    description="Return existing translation",
+    parameters=[]
+)
 class TransNone(BaseTranslator):
 
     concate_text = False
@@ -255,7 +261,14 @@ def transhook_copy_original(translations: List[str] = None, textblocks: List[Tex
 TransNone.register_postprocess_hooks({'copy_original': transhook_copy_original})
 
 
-@register_translator('Copy Source')
+@register_model_definition(
+    key="Copy Source",
+    name="Copy Source",
+    model_type=ModelType.TRANSLATOR,
+    provider=ModelProvider.LOCAL,
+    description="Copy source text as translation",
+    parameters=[]
+)
 class TransSource(BaseTranslator):
 
     concate_text = False

@@ -13,7 +13,7 @@ def load_ctd_model(model_path, device, detect_size=1024) -> CTDModel:
     
     return model
 
-@register_textdetectors('ctd')
+@register_textdetectors('comictextdetector')
 class ComicTextDetector(TextDetectorBase):
 
     params = {

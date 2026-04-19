@@ -1,15 +1,17 @@
-import numpy as np
-import cv2
+from .structuring import *
 from typing import Dict, List
 from collections import OrderedDict
 import sys
+import numpy as np
+import cv2
 
 from utils.registry import Registry
-from utils.textblock_mask import extract_ballon_mask
-from utils.imgproc_utils import enlarge_window
+INPAINTERS = Registry('inpainters')
+register_inpainter = INPAINTERS.register_module
 
 from ..base import BaseModule, DEFAULT_DEVICE, soft_empty_cache, DEVICE_SELECTOR, GPUINTENSIVE_SET, TORCH_DTYPE_MAP, BF16_SUPPORTED
 from ..textdetector import TextBlock
+from ..model_registry import module_register
 
 INPAINTERS = Registry('inpainters')
 register_inpainter = INPAINTERS.register_module
@@ -50,8 +52,8 @@ class InpainterBase(BaseModule):
     def __init__(self, **params) -> None:
         super().__init__(**params)
         self.name = ''
-        for key in INPAINTERS.module_dict:
-            if INPAINTERS.module_dict[key] == self.__class__:
+        for key in module_register.module_dict:
+            if module_register.module_dict[key] == self.__class__:
                 self.name = key
                 break
     
@@ -478,7 +480,7 @@ class LamaLarge(LamaInpainterMPE):
     }
 
     download_file_list = [{
-            'url': 'https://huggingface.co/dreMaz/AnimeMangaInpainting/resolve/main/lama_large_512px.ckpt',
+            'url': 'https://hf-mirror.com/dreMaz/AnimeMangaInpainting/resolve/main/lama_large_512px.ckpt',
             'sha256_pre_calculated': '11d30fbb3000fb2eceae318b75d9ced9229d99ae990a7f8b3ac35c8d31f2c935',
             'files': 'data/models/lama_large_512px.ckpt',
     }]

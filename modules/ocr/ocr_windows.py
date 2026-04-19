@@ -12,7 +12,7 @@ if platform.system() == 'Windows' and platform.version() >= '10.0.10240.0':
         import cv2, asyncio
         from typing import List
 
-        from .base import register_OCR, OCRBase, LOGGER, TextBlock
+        from .base import register_OCR, OCRBase, LOGGER, TextBlock, register_model_definition, ModelType, ModelProvider
 
         def get_supported_language_packs():
             return list(OcrEngine.available_recognizer_languages)
@@ -39,7 +39,14 @@ if platform.system() == 'Windows' and platform.version() >= '10.0.10240.0':
 
             languages_display_name = [lang.display_name for lang in winocr_available_recognizer_languages]
             languages_tag = [lang.language_tag for lang in winocr_available_recognizer_languages]
-            @register_OCR('windows_ocr')
+            @register_model_definition(
+    key="windows_ocr",
+    name="Windows Ocr",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
             class OCRWindows(OCRBase):
                 params = {
                     'language': {

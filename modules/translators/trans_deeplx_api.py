@@ -1,7 +1,14 @@
 from .base import *
 import httpx
 
-@register_translator('DeepLX API')
+@register_model_definition(
+    key="DeepLX API",
+    name="Deeplx Api Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class DeepLTranslatorv2(BaseTranslator):
 
     concate_text = False

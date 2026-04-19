@@ -8,7 +8,7 @@ import httpx
 import openai
 from pydantic import BaseModel, Field, ValidationError
 
-from .base import BaseTranslator, register_translator
+from .base import BaseTranslator, register_translator, register_model_definition, ModelType, ModelProvider
 
 
 class InvalidNumTranslations(Exception):
@@ -30,7 +30,14 @@ class TranslationResponse(BaseModel):
     )
 
 
-@register_translator("LLM_API_Translator")
+@register_model_definition(
+    key="LLM_API_Translator",
+    name="Llm Api Translator Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class LLM_API_Translator(BaseTranslator):
     concate_text = False
     cht_require_convert = True

@@ -10,7 +10,12 @@ from platform import platform
 BRANCH = 'dev'
 VERSION = '1.4.0'
 
-python = sys.executable
+# Use venv python if available
+venv_python = Path(__file__).parent / "venv" / "bin" / "python3"
+if venv_python.exists():
+    python = str(venv_python)
+else:
+    python = sys.executable
 git = os.environ.get('GIT', "git")
 skip_install = False
 index_url = os.environ.get('INDEX_URL', "")

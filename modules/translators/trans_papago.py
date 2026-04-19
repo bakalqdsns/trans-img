@@ -1,6 +1,13 @@
 from .base import *
 
-@register_translator('Papago')
+@register_model_definition(
+    key="Papago",
+    name="Papago Translate",
+    model_type=ModelType.TEXT_TRANSLATOR,
+    provider=ModelProvider.API,
+    description="",
+    parameters=[]
+)
 class PapagoTranslator(BaseTranslator):
 
     concate_text = True

@@ -9,14 +9,14 @@ from sympy import true
 
 from .funcmaps import get_maskseg_method
 from utils.logger import logger as LOGGER
-from utils.registry import Registry
+
 from utils.imgproc_utils import enlarge_window, get_block_mask
 from utils.io_utils import imread, text_is_empty
 from modules.translators import MissingTranslatorParams
 from modules.base import BaseModule, soft_empty_cache
 from modules import INPAINTERS, TRANSLATORS, TEXTDETECTORS, OCR, \
     GET_VALID_TRANSLATORS, GET_VALID_TEXTDETECTORS, GET_VALID_INPAINTERS, GET_VALID_OCR, \
-    BaseTranslator, InpainterBase, TextDetectorBase, OCRBase, merge_config_module_params
+    BaseTranslator, InpainterBase, TextDetectorBase, OCRBase, merge_config_module_params, model_registry
 import modules
 modules.translators.SYSTEM_LANG = QLocale.system().name()
 from utils.textblock import TextBlock, sort_regions
@@ -35,7 +35,7 @@ class ModuleThread(QThread):
     _failed_set_module_msg = 'Failed to set module.'
     module_thread_stopped = Signal()
 
-    def __init__(self, module_key: str, MODULE_REGISTER: Registry, *args, **kwargs) -> None:
+    def __init__(self, module_key: str, MODULE_REGISTER: str, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.job = None
         self.module: Union[TextDetectorBase, BaseTranslator, InpainterBase, OCRBase] = None
@@ -51,9 +51,23 @@ class ModuleThread(QThread):
     def _set_module(self, module_name: str):
         old_module = self.module
         try:
+            if not module_name:
+                module_name = getattr(cfg_module, self.module_key, None)
+
+            if not module_name or module_name not in self.module_register.module_dict:
+                if hasattr(cfg_module, self.module_key):
+                    fallback = getattr(cfg_module, self.module_key)
+                    if fallback in self.module_register.module_dict:
+                        module_name = fallback
+
+            if not module_name or module_name not in self.module_register.module_dict:
+                if len(self.module_register.module_dict) == 0:
+                    raise RuntimeError(f'No registered modules available for {self.module_key}')
+                module_name = next(iter(self.module_register.module_dict))
+
             module: Union[TextDetectorBase, BaseTranslator, InpainterBase, OCRBase] \
                 = self.module_register.module_dict[module_name]
-            params = cfg_module.get_params(self.module_key)[module_name]
+            params = cfg_module.get_params(self.module_key).get(module_name)
             if params is not None:
                 self.module = module(**params)
             else:
@@ -180,8 +194,8 @@ class TranslateThread(ModuleThread):
                 return
         
         try:
-            params = cfg_module.translator_params[translator]
-            translator_module: BaseTranslator = TRANSLATORS.module_dict[translator]
+            params = cfg_module.translator_params.get(translator)
+            translator_module: BaseTranslator = self.module_register.module_dict[translator]
             if params is not None:
                 self.translator = translator_module(source, target, raise_unsupported_lang=False, **params)
             else:
@@ -191,7 +205,7 @@ class TranslateThread(ModuleThread):
             cfg_module.translator = self.translator.name
         except Exception as e:
             if old_translator is None:
-                old_translator = TRANSLATORS.module_dict['google']('简体中文', 'English', raise_unsupported_lang=False)
+                old_translator = self.module_register.module_dict['google']('简体中文', 'English', raise_unsupported_lang=False)
             self.translator = old_translator
             msg = self.tr('Failed to set translator ') + translator
             create_error_dialog(e, msg, 'FailedSetTranslator')

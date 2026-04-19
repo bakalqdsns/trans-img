@@ -9,10 +9,17 @@ from typing import List, Optional
 import openai
 import httpx
 
-from .base import register_OCR, OCRBase, TextBlock
+from .base import register_OCR, OCRBase, TextBlock, register_model_definition, ModelType, ModelProvider
 
 
-@register_OCR("llm_ocr")
+@register_model_definition(
+    key="llm_ocr",
+    name="Llm Ocr",
+    model_type=ModelType.OCR,
+    provider=ModelProvider.LOCAL,
+    description="",
+    parameters=[]
+)
 class LLM_OCR(OCRBase):
     lang_map = {
         "Auto Detect": None,
