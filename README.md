@@ -3,7 +3,7 @@
 
 # BallonTranslator (trans-img)
 
-简体中文 | [English](/README_EN.md)
+简体中文
 
 深度学习辅助漫画翻译工具（模块化版本），支持一键机翻、OCR/翻译解耦、自定义模型接入与简单的图像/文本编辑  
 
