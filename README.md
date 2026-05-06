@@ -3,14 +3,13 @@
 
 # BallonTranslator (trans-img · Multimodal Edition)
 
-简体中文 | [English](/README_EN.md)
-
 一个**多模态图像文本处理与转换引擎**，支持从图像中提取、理解、转换并重构文本信息。  
 可用于漫画翻译、图片文本重排、OCR数据处理、AI内容生成等场景。
 
 ---
 
 <!-- IMAGE: 系统总览图 -->
+<img src="doc/src/ui0.jpg" height="300">
 <!-- 建议放：pipeline/架构图 -->
 <p align=center>
 系统结构概览
