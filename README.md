@@ -9,7 +9,7 @@
 ---
 
 <!-- IMAGE: 系统总览图 -->
-<img src="doc/src/ui0.jpg" height="300">
+
 <!-- 建议放：pipeline/架构图 -->
 <p align=center>
 系统结构概览
