@@ -1,7 +1,6 @@
 > [!IMPORTANT]  
 > **如打算公开分享本工具的机翻或自动生成内容，且未经过人工校对，请在显眼位置注明。**
-
-# BallonTranslator (trans-img · Multimodal Edition)
+trans-img · Multimodal Edition
 
 一个**多模态图像文本处理与转换引擎**，支持从图像中提取、理解、转换并重构文本信息。  
 可用于漫画翻译、图片文本重排、OCR数据处理、AI内容生成等场景。
